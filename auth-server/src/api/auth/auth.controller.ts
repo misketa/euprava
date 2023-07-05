@@ -69,9 +69,11 @@ export class AuthController {
       req.body.username,
       req.body.password,
     );
+
     if (!user) {
       return res.redirect(`login?successUrl=${successUrl}&hasError=true`);
     }
+
     const url = new URL(successUrl);
     const jwt = await this.authService.jwt(user);
     session.user_id = user._id;

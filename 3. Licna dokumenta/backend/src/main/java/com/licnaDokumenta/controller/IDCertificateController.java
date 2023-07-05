@@ -41,7 +41,7 @@ public class IDCertificateController {
     }
 
     @PostMapping("/createIDforUser")
-    public ResponseEntity<UsersId> save(UsersId usersId) {
+    public ResponseEntity<UsersId> save(@RequestBody UsersId usersId) {
         usersIdService.save(usersId);
         return new ResponseEntity<>(usersId, HttpStatus.CREATED);
     }

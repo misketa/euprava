@@ -32,8 +32,8 @@ const InputForm = (props) => {
       message,
     };
 
-    const result = await saveID(id);
-    if (result) {
+    const { payload } = await saveID(id);
+    if (payload) {
       setShow(true);
       setMethod("post");
       setTimeout(() => setShow(false), 3000);

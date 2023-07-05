@@ -10,8 +10,11 @@ import java.util.List;
 @Repository
 public interface UsersIdRepository extends JpaRepository<UsersId, Long> {
 
-    @Query(value = "select * from certificate where user_jmbg = ?1",
+    @Query(value = "select * from users_id where jmbg = ?1",
             nativeQuery = true)
     List<UsersId> findByUserJmbg(String jmbg);
+
+    @Query(value = "SELECT * FROM muplicnadokumentadb.users_id", nativeQuery = true)
+    List<UsersId> findAllIDs();
 
 }

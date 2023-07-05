@@ -1,6 +1,7 @@
 package com.licnaDokumenta.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,11 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Table
+@AllArgsConstructor
 public class UsersId {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String userJmbg;
+    private String jmbg;
     private String name;
     private String lastname;
     private String address;
@@ -21,8 +23,8 @@ public class UsersId {
 
 
 
-    public UsersId(String userJmbg, String message) {
-        this.userJmbg = userJmbg;
+    public UsersId(String jmbg, String message) {
+        this.jmbg = jmbg;
         this.message = message;
     }
 }

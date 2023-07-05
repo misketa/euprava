@@ -23,7 +23,7 @@ public class UsersIdService {
 
     public IDResponse generateID(final IDRequest request) {
 
-        IDResponse response =  new IDResponse("Izdaje se uverenje o vazecoj licnoj karti za  "
+        IDResponse response = new IDResponse("Izdaje se uverenje o vazecoj licnoj karti za  "
                 + request.getName() + " " + request.getLastName()
                 + ", JMBG: " + request.getJmbg() + " u svrhu " + request.getPurpose());
 
@@ -39,17 +39,22 @@ public class UsersIdService {
 
     public CheckUserIDResponse checkUserIDResponse(final String jmbg) {
         List<UsersId> idsOfUser = usersIdRepository.findByUserJmbg(jmbg);
-        if(idsOfUser.isEmpty()) {
+        if (idsOfUser.isEmpty()) {
             return new CheckUserIDResponse(false);
         }
         return new CheckUserIDResponse(true);
     }
 
-    public void remove(Long id) {usersIdRepository.deleteById(id); }
+    public void remove(Long id) {
+        usersIdRepository.deleteById(id);
+    }
 
-    public void save(UsersId usersId){
+    public void save(UsersId usersId) {
         usersIdRepository.save(usersId);
     }
 
-    public void findAll(UsersId usersId) {usersIdRepository.findAll();}
+    public void findAll(UsersId usersId) {
+        usersIdRepository.findAllIDs();
+    }
+
 }

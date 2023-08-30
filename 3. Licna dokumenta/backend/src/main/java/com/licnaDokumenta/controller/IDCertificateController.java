@@ -1,8 +1,7 @@
 package com.licnaDokumenta.controller;
 
-import com.licnaDokumenta.dto.CheckUserIDResponse;
-import com.licnaDokumenta.dto.IDRequest;
-import com.licnaDokumenta.dto.IDResponse;
+import com.licnaDokumenta.dto.*;
+import com.licnaDokumenta.model.Passport;
 import com.licnaDokumenta.model.User;
 import com.licnaDokumenta.model.UsersId;
 import com.licnaDokumenta.service.UsersIdService;
@@ -12,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -40,6 +41,12 @@ public class IDCertificateController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UsersId> findOne(@PathVariable Long id) {
+        UsersId usersId =  usersIdService.findOne(id);
+        return new ResponseEntity<>(usersId, HttpStatus.OK);
+    }
+
     @PostMapping("/createIDforUser")
     public ResponseEntity<UsersId> save(@RequestBody UsersId usersId) {
         usersIdService.save(usersId);
@@ -47,8 +54,19 @@ public class IDCertificateController {
     }
 
     @GetMapping("/findAllIDs")
-    public ResponseEntity<UsersId> findAllIDs(UsersId usersId) {
-        usersIdService.findAll(usersId);
-        return new ResponseEntity<>(usersId, HttpStatus.OK);
+    public ResponseEntity<List<UsersId>> findAllIDs() {
+        List<UsersId> response =  usersIdService.findAll();
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<UsersId> update(@PathVariable("id") Long id,
+                                           @Valid @RequestBody IDDto idDto) {
+        UsersId update = usersIdService.update(id, idDto);
+        return new ResponseEntity<>(update, HttpStatus.OK);
+    }
+//TODO DODATI LOGIKU ZA PROVERU KADA JE DOZVOLJENO PRODUZENJE LICNE KARTE
+
 }

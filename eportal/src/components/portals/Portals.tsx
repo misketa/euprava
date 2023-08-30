@@ -11,9 +11,9 @@ const Portals: React.FC = () => {
     }
 
     const portals: [string, string][] = Object.entries({
-        1000: "blabla1000",
-        2000: "blabla2000",
+        
         3000: "Licna dokumenta",
+        2000: "Matičar",
       
     });
     return <Grid templateColumns={"repeat(4, 1fr)"} gap={6}>

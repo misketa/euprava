@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
@@ -32,10 +33,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
         else {
             List<GrantedAuthority> grantedAuthorities = new ArrayList();
-            String role = "ROLE_" + user.getRole();
+            String role = "ROLE_" + User.Role.valueOf(0);
             grantedAuthorities.add(new SimpleGrantedAuthority(role));
             return new org.springframework.security.core.userdetails.User(user.getUsername().trim(),
                     "", grantedAuthorities);
         }
     }
+
+
 }
+//TODO sredi granthed authorites
+

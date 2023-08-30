@@ -1,18 +1,20 @@
 package com.licnaDokumenta.service;
 
-import com.licnaDokumenta.dto.CheckUserIDResponse;
-import com.licnaDokumenta.dto.IDRequest;
-import com.licnaDokumenta.dto.IDResponse;
-import com.licnaDokumenta.model.User;
+import com.licnaDokumenta.dto.*;
+import com.licnaDokumenta.model.Passport;
 import com.licnaDokumenta.model.UsersId;
 import com.licnaDokumenta.repository.UserRepository;
 import com.licnaDokumenta.repository.UsersIdRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class UsersIdService {
 
     @Autowired
@@ -53,8 +55,23 @@ public class UsersIdService {
         usersIdRepository.save(usersId);
     }
 
-    public void findAll(UsersId usersId) {
-        usersIdRepository.findAllIDs();
+    public List<UsersId> findAll() {
+       return usersIdRepository.findAllIDs();
     }
 
+    public UsersId update(Long id, IDDto idDto) {
+        UsersId usersId = (UsersId) usersIdRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "UsersID with id " + id + " not found"));
+
+
+        usersId.setDatumVazenja(idDto.getDatumVazenja());
+
+        return usersIdRepository.save(usersId);
+
+    }
+
+    public UsersId findOne(Long id) {
+        return  usersIdRepository.findById(id).orElse(null);
+    }
 }

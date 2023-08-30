@@ -17,8 +17,7 @@ public class UserInfo {
     private String jmbg;
     private String address;
     private LocalDate dateOfBirth;
-
-    private String role;
+    private User.Role role;
 
     public UserInfo(User user){
         this.name = user.getName();
@@ -26,6 +25,6 @@ public class UserInfo {
         this.jmbg = user.getIdentificationNumber();
         this.address = user.getAddress();
         this.dateOfBirth = user.getDateOfBirth();
-        this.role = user.getRole();
+
     }
 }

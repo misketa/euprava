@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -20,7 +22,7 @@ public class UsersId {
     private String address;
     private String dateOfBirth;
     private String message;
-
+    private Date datumVazenja;
 
 
     public UsersId(String jmbg, String message) {

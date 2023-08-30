@@ -45,13 +45,13 @@ public class SecurityConfiguration  {
         http.cors().and().csrf().disable()
                 .exceptionHandling().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeHttpRequests().requestMatchers("/api/auth/**", "/api/id-certificates/**").permitAll()
+                .authorizeHttpRequests().requestMatchers("/api/auth/**", "/api/id-certificates/**", "/api/passport/**", "/api/nekaznjavanje/**").permitAll()
                 .requestMatchers("/api/test/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());
 
-        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        //http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -86,13 +86,13 @@ public class SecurityConfiguration  {
         return new ProviderManager(Collections.singletonList(authenticationProvider()));
     }
 
-    @Bean
+   /* @Bean
     public AuthenticationTokenFilter authenticationJwtTokenFilter() throws Exception {
         AuthenticationTokenFilter filter = new AuthenticationTokenFilter(userDetailsService, tokenUtils, authenticationManager);
         filter.setAuthenticationManager(authenticationManager);
         return filter;
     }
-
+*/
 
 
 

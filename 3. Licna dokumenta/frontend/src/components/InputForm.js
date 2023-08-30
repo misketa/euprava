@@ -8,6 +8,7 @@ const InputForm = (props) => {
   const [address, setAddress] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [message, setMessage] = useState("");
+  const [datumVazenja, setDatumVazenja] = useState("");
   const [show, setShow] = useState(false);
   const [method, setMethod] = useState("");
 
@@ -18,6 +19,7 @@ const InputForm = (props) => {
     address: "",
     dateOfBirth: "",
     message: "",
+    datumVazenja: "",
   };
 
   const handleSubmit = async (event) => {
@@ -30,6 +32,7 @@ const InputForm = (props) => {
       address,
       dateOfBirth,
       message,
+      datumVazenja,
     };
 
     const { payload } = await saveID(id);
@@ -45,6 +48,7 @@ const InputForm = (props) => {
     setAddress("");
     setDateOfBirth("");
     setMessage("");
+    setDatumVazenja("");
   };
 
   return (
@@ -112,6 +116,17 @@ const InputForm = (props) => {
         name="message"
         value={message}
         onChange={(event) => setMessage(event.target.value)}
+      />
+      <br />
+
+      <label for="message">Datum vazenja:</label>
+      <br />
+      <input
+        type="date"
+        id="datumVazenja"
+        name="datumVazenja"
+        value={datumVazenja}
+        onChange={(event) => setDatumVazenja(event.target.value)}
       />
       <br />
       <br />

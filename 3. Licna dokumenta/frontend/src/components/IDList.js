@@ -8,7 +8,8 @@ const IDList = () => {
     axios
       .get("http://localhost:3002/api/id-certificates/findAllIDs")
       .then((response) => {
-        setTableData(response.data.data);
+        console.log(response);
+        setTableData(response.data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);

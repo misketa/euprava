@@ -130,28 +130,81 @@ services:
     image: mysql:8.0.23
     container_name: mup-licna-dokumenta-mysql
     ports:
-      - "3003:3306"
+      - "3003:3003"
     environment:
+      - MYSQL_TCP_PORT=3003
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=muplicnadokumentadb
-      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=root
     volumes:
-      - mup-licna-dokumenta-mysql:/var/lib/mysql
+      - mup-licna-dokumenta-mysql-data:/var/lib/mysql
       - ./3. Licna dokumenta/database:/tmp/database
     command: mysqld --init-file="/tmp/database/init_db.sql"
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 15s
-      timeout: 5s
-      retries: 3
-      start_period: 20s
     networks:
       tiseu:
         aliases:
           - "mup-licna-dokumenta-mysql"
 
+  # --- MATICAR ---
+
+  maticar-frontend:
+    environment:
+      - PORT=2000
+      - APP_URL=http://localhost:2000
+      - AUTH_SERVER_URL=http://localhost:5101
+      - BACKEND_URL=http://localhost:2001/api
+    build:
+      context: ./4. Maticar/maticar-frontend/my-react-app
+    container_name: maticar-frontend
+    networks:
+      tiseu:
+        aliases:
+          - maticar-frontend
+    ports:
+      - "2000:2000"
+    command: npm start
+
+  maticar-backend:
+    depends_on:
+      - maticar-mysql
+    build:
+      context: ./4. Maticar/maticar/
+    container_name: maticar-backend
+    ports:
+      - "2002:2002"
+    networks:
+      tiseu:
+        aliases:
+          - maticar-backend
+    environment:
+      - MYSQL_USER=root
+      - AUTH_SERVER_API=http://auth-app:3101
+      - MYSQL_PASSWORD=root
+      - MYSQL_DB=maticardb
+      - MYSQL_HOST=maticar-mysql
+      - MYSQL_PORT=2003
+
+  maticar-mysql:
+    image: mysql:8.0.23
+    container_name: maticar-mysql
+    ports:
+      - "2003:2003"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_TCP_PORT=2003
+      - MYSQL_DATABASE=root
+    volumes:
+      - maticar-mysql-data:/var/lib/mysql
+      - ./4. Maticar/database:/tmp/database
+    command: mysqld --init-file="/tmp/database/init_db.sql"
+    networks:
+      tiseu:
+        aliases:
+          - "maticar-mysql"
+
 volumes:
   auth-mongodb:
     driver: local
-  mup-licna-dokumenta-mysql:
+  mup-licna-dokumenta-mysql-data:
+    driver: local
+  maticar-mysql-data:
     driver: local
